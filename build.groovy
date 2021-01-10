@@ -9,9 +9,15 @@ node("linux") {
     }
     stage("Test container") {
         docker.image(customImage).withRun{
-            sh "${CMD} > cmdRC"
-            env.status = readFile('cmdRC').trim()
-            echo "${env.status}"
+            timeout(10){
+                waitUntil{
+                    def responseGetAll = httpRequest consoleLogResponseBody: true,
+                        contentType: 'APPLICATION_JSON',
+                        httpMode: 'GET',
+                        url: "http://localhost:80/",
+                        validResponseCodes: '200')
+                }
+            }
         }
     }
 }
