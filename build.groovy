@@ -22,5 +22,8 @@ node("linux") {
         }
     }
     stage("Push image"){
+        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+            customImage.push("latest")
+        }
     }
 }
