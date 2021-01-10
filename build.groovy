@@ -9,13 +9,14 @@ node("linux") {
     }
     stage("Test container") {
         docker.image(customImage).withRun{
-            timeout(10){
+            timeout(time: 15, unit: 'SECONDS') {
                 waitUntil{
-                    def responseGetAll = httpRequest consoleLogResponseBody: true,
-                        contentType: 'APPLICATION_JSON',
-                        httpMode: 'GET',
-                        url: "http://localhost:80/",
-                        validResponseCodes: '200'
+                    try {         
+                        sh "curl -s --head  --request GET  localhost:80 | grep '200'"
+                        return true
+                    } catch (Exception e) {
+                        return false
+                  }
                 }
             }
         }
