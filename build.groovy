@@ -1,6 +1,6 @@
 node("linux") {
     enviroment {
-        CMD = "bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:80)" != "200" ]]; do sleep 5; done'"
+        CMD = "curl --write-out %{http_code} --silent --output /dev/null localhost:80"
     }
     customImage = ""
     stage("Clone repo"){
