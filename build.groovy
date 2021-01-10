@@ -21,4 +21,6 @@ node("linux") {
             }
         }
     }
+    stage("Push image"){
+    }
 }
