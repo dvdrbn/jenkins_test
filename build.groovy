@@ -26,4 +26,7 @@ node("linux") {
             customImage.push("latest")
         }
     }
+    stage("Deploy app"){
+        kubernetesDeploy(configs: "app.yaml", kubeconfigId: "kube-creds")
+    }
 }
