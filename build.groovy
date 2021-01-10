@@ -27,6 +27,6 @@ node("linux") {
         }
     }
     stage("Deploy app"){
-        kubernetesDeploy configs: 'app.yaml', kubeConfig: [path: ''], kubeconfigId: 'kube-creds', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+        kubernetesDeploy(configs: "app.yaml", kubeconfigId: "kube-creds")
     }
 }
