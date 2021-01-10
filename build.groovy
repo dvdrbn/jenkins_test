@@ -15,7 +15,7 @@ node("linux") {
                         contentType: 'APPLICATION_JSON',
                         httpMode: 'GET',
                         url: "http://localhost:80/",
-                        validResponseCodes: '200')
+                        validResponseCodes: '200'
                 }
             }
         }
