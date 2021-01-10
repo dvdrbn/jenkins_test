@@ -1,7 +1,5 @@
 node("linux") {
-    enviroment {
-        CMD = "curl --write-out %{http_code} --silent --output /dev/null localhost:80"
-    }
+    CMD = "curl --write-out %{http_code} --silent --output /dev/null localhost:80"
     customImage = ""
     stage("Clone repo"){
         checkout scm
