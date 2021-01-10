@@ -1,0 +1,31 @@
+---
+# Create a pod and expose port 80
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+  labels:
+    app: app
+spec:
+  containers:
+    - image: dvdrbn/opsschool-jenkins-test-01:latest
+      name: app
+      ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-service
+spec:
+  selector:
+    app: app
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 80
+      nodePort: 30038
+      protocol: TCP
