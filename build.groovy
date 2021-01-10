@@ -1,4 +1,7 @@
 node("linux") {
+    enviroment {
+        CMD = "bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:80)" != "200" ]]; do sleep 5; done'"
+    }
     customImage = ""
     stage("Clone repo"){
         checkout scm
@@ -8,7 +11,9 @@ node("linux") {
     }
     stage("Test container") {
         docker.image(customImage).withRun{
-            bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:80)" != "200" ]]; do sleep 5; done'
+            sh "${CMD} > cmdRC"
+            env.status = readFile('cmdRC').trim()
+            echo "${env.status}"
         }
     }
 }
