@@ -1,12 +1,14 @@
 node("linux") {
     customImage = ""
-    stage("clone repo"){
+    stage("Clone repo"){
         checkout scm
     }
-    stage("build docker") {
+    stage("Build image") {
         customImage = docker.build("dvdrbn/opsschool-jenkins-test-01")
     }
-    stage("verify dockers") {
-        sh "docker images"
+    stage("Test container") {
+        docker.image(customImage).withRun{
+            bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:80)" != "200" ]]; do sleep 5; done'
+        }
     }
 }
