@@ -8,7 +8,7 @@ node("linux") {
         customImage = docker.build(imageName)
     }
     stage("Test container") {
-        docker.image(imageName).withRun{
+        docker.image(imageName).withRun('-p 80:80'){
             timeout(time: 15, unit: 'SECONDS') {
                 waitUntil{
                     try {         
